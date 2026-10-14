@@ -312,8 +312,8 @@ export default function ProductDetailsModal() {
                     </li>
                     <li className="flex items-start gap-1.5">
                       <span className="text-[#DE0D64] font-bold mt-0.5">•</span>
-                      <span className="text-slate-800 font-semibold bg-pink-100/70 px-1.5 py-0.5 rounded">
-                        আমাদের পক্ষ থেকে ভুল বা ত্রুটিপূর্ণ পণ্য গেলে এক্সচেঞ্জ ফি ও ডেলিভারি চার্জের সম্পূর্ণ দায়িত্ব <strong>Gadgets Ghor</strong> বহন করবে।
+                      <span className="text-slate-800 font-semibold bg-pink-100/70 px-1.5 py-0.5 rounded leading-relaxed">
+                        আমাদের পক্ষ থেকে ভুল বা ত্রুটিপূর্ণ পণ্য গেলে এক্সচেঞ্জ ফি ও ডেলিভারি চার্জের সম্পূর্ণ দায়িত্ব <strong>Gadgets Ghor</strong> বহন করবে (অবশ্যই আনবক্সিং ভিডিও দেখাতে হবে)।
                       </span>
                     </li>
                   </ul>
