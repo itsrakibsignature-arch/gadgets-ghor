@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   X, 
   ShoppingCart, 
@@ -10,7 +10,9 @@ import {
   Plus, 
   Minus,
   MessageCircle,
-  PhoneCall
+  PhoneCall,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
@@ -26,10 +28,24 @@ export default function ProductDetailsModal() {
 
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState(null);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  // Build product image list (if product has images array, use it; otherwise fallback to main image)
+  const productImages = selectedProduct 
+    ? (selectedProduct.images && selectedProduct.images.length > 0 
+        ? selectedProduct.images 
+        : [selectedProduct.image || '/logo-icon.jpg'])
+    : [];
+
+  useEffect(() => {
+    setActiveImageIndex(0);
+    setQuantity(1);
+    setSelectedColor(null);
+  }, [selectedProduct]);
 
   if (!selectedProduct) return null;
 
-  const isWishlisted = wishlist.some(item => item.id === product?.id || item.id === selectedProduct.id);
+  const isWishlisted = wishlist.some(item => item.id === selectedProduct.id);
   const colors = selectedProduct.colors || ['Standard'];
   const currentColor = selectedColor || colors[0];
 
@@ -49,6 +65,8 @@ export default function ProductDetailsModal() {
     window.open(`https://wa.me/8801400725333?text=${text}`, '_blank');
   };
 
+  const currentDisplayImage = productImages[activeImageIndex] || selectedProduct.image || '/logo-icon.jpg';
+
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-2 sm:p-4">
       {/* Backdrop */}
@@ -57,7 +75,7 @@ export default function ProductDetailsModal() {
         className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
       ></div>
 
-      <div className="relative bg-white rounded-3xl shadow-2xl border border-pink-100 max-w-2xl w-full overflow-hidden z-10 my-auto text-slate-800 animate-subtle max-h-[92vh] flex flex-col">
+      <div className="relative bg-white rounded-3xl shadow-2xl border border-pink-100 max-w-3xl w-full overflow-hidden z-10 my-auto text-slate-800 animate-subtle max-h-[94vh] flex flex-col">
         
         {/* Modal Top Bar */}
         <div className="p-3 sm:p-4 border-b border-slate-100 flex items-center justify-between bg-white shrink-0">
@@ -79,34 +97,93 @@ export default function ProductDetailsModal() {
         </div>
 
         {/* Modal Scrollable Content */}
-        <div className="overflow-y-auto p-4 sm:p-6 space-y-4 sm:space-y-5">
+        <div className="overflow-y-auto p-4 sm:p-6 space-y-4 sm:space-y-6">
           
-          {/* Main Product Showcase: Ghorer Bazar Style */}
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
+          {/* Main Product Showcase: Ghorer Bazar Style with Multi-Image Gallery */}
+          <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start">
             
-            {/* Left Image Section */}
-            <div className="w-full sm:w-1/2 flex flex-col items-center">
-              <div className="w-full aspect-square bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-6 flex items-center justify-center relative shadow-xs">
+            {/* Left Image Section: Ghorer Bazar Gallery (Thumbnail column + Main preview) */}
+            <div className="w-full md:w-1/2 flex flex-col items-center">
+              
+              <div className="w-full flex gap-2.5 sm:gap-3">
                 
-                {/* Wishlist Heart */}
-                <button
-                  onClick={() => toggleWishlist(selectedProduct)}
-                  className={`absolute top-3 right-3 p-2 rounded-full transition shadow-xs cursor-pointer ${
-                    isWishlisted 
-                      ? 'bg-pink-50 text-[#DE0D64]' 
-                      : 'bg-slate-50 text-slate-400 hover:text-[#DE0D64]'
-                  }`}
-                  aria-label="Wishlist"
-                >
-                  <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-[#DE0D64]' : ''}`} />
-                </button>
+                {/* Vertical Thumbnails List (Desktop) / Horizontal (Mobile) */}
+                {productImages.length > 1 && (
+                  <div className="flex md:flex-col gap-2 overflow-x-auto md:overflow-y-auto max-h-[300px] pb-1 md:pb-0 scrollbar-none shrink-0">
+                    {productImages.map((imgUrl, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setActiveImageIndex(idx)}
+                        className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl p-1 bg-white border-2 transition cursor-pointer flex items-center justify-center shrink-0 ${
+                          activeImageIndex === idx 
+                            ? 'border-[#DE0D64] shadow-xs' 
+                            : 'border-slate-200 hover:border-pink-200 opacity-70 hover:opacity-100'
+                        }`}
+                      >
+                        <img 
+                          src={imgUrl} 
+                          alt={`Thumbnail ${idx + 1}`} 
+                          className="w-full h-full object-contain"
+                          onError={(e) => { e.target.src = '/logo-icon.jpg'; }}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                )}
 
-                <img
-                  src={selectedProduct.image || '/logo-icon.jpg'}
-                  alt={selectedProduct.name}
-                  className="w-full h-full object-contain max-h-[280px]"
-                  onError={(e) => { e.target.src = '/logo-icon.jpg'; }}
-                />
+                {/* Main Image Stage */}
+                <div className="flex-1 aspect-square bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-6 flex items-center justify-center relative shadow-xs group">
+                  
+                  {/* Top Badges */}
+                  <div className="absolute top-3 left-3 z-10 flex flex-col gap-1 items-start">
+                    {selectedProduct.discount > 0 && (
+                      <span className="bg-emerald-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-md shadow-xs pointer-events-none">
+                        Save {selectedProduct.discount}tk
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Wishlist Heart */}
+                  <button
+                    onClick={() => toggleWishlist(selectedProduct)}
+                    className={`absolute top-3 right-3 z-10 p-2 rounded-full transition shadow-xs cursor-pointer ${
+                      isWishlisted 
+                        ? 'bg-pink-50 text-[#DE0D64]' 
+                        : 'bg-white/90 hover:bg-white text-slate-400 hover:text-[#DE0D64]'
+                    }`}
+                    aria-label="Wishlist"
+                  >
+                    <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-[#DE0D64]' : ''}`} />
+                  </button>
+
+                  <img
+                    src={currentDisplayImage}
+                    alt={selectedProduct.name}
+                    className="w-full h-full object-contain max-h-[300px] transition-transform duration-300 group-hover:scale-105"
+                    onError={(e) => { e.target.src = '/logo-icon.jpg'; }}
+                  />
+
+                  {/* Gallery Next/Prev Navigation Arrows (if multiple images) */}
+                  {productImages.length > 1 && (
+                    <>
+                      <button
+                        onClick={() => setActiveImageIndex(prev => (prev === 0 ? productImages.length - 1 : prev - 1))}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 p-1 rounded-full bg-white/80 hover:bg-white text-slate-700 shadow-md transition cursor-pointer"
+                        aria-label="Previous image"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => setActiveImageIndex(prev => (prev === productImages.length - 1 ? 0 : prev + 1))}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-full bg-white/80 hover:bg-white text-slate-700 shadow-md transition cursor-pointer"
+                        aria-label="Next image"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </>
+                  )}
+                </div>
+
               </div>
 
               {/* In-Stock Indicator */}
@@ -117,7 +194,7 @@ export default function ProductDetailsModal() {
             </div>
 
             {/* Right Product Info */}
-            <div className="w-full sm:w-1/2 flex flex-col justify-between">
+            <div className="w-full md:w-1/2 flex flex-col justify-between">
               
               <div>
                 {/* Product Title */}
