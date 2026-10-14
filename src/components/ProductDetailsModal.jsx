@@ -12,7 +12,8 @@ import {
   MessageCircle,
   PhoneCall,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Check
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
@@ -276,6 +277,23 @@ export default function ProductDetailsModal() {
                   </div>
                 </div>
 
+                {/* Product Key Highlights (Clean concise points) */}
+                {selectedProduct.highlights && selectedProduct.highlights.length > 0 && (
+                  <div className="mb-4 bg-slate-50/80 rounded-xl p-3 border border-slate-200/60">
+                    <h3 className="text-xs font-bold text-slate-800 mb-2 flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#DE0D64]"></span>
+                      মূল বৈশিষ্ট্যসমূহ (Key Highlights):
+                    </h3>
+                    <ul className="space-y-1.5">
+                      {selectedProduct.highlights.map((highlight, hIdx) => (
+                        <li key={hIdx} className="text-xs text-slate-600 flex items-start gap-1.5 leading-relaxed">
+                          <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                          <span>{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
 
             </div>
