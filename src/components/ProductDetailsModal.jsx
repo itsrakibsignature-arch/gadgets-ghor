@@ -294,6 +294,30 @@ export default function ProductDetailsModal() {
                     </ul>
                   </div>
                 )}
+
+                {/* Warranty & Return Policy (ওয়ারেন্টি ও রিটার্ন পলিসি) */}
+                <div className="mb-4 bg-pink-50/40 rounded-xl p-3.5 border border-pink-100 text-xs text-slate-700 space-y-2">
+                  <div className="flex items-center gap-2 text-slate-900 font-bold text-xs pb-1 border-b border-pink-200/60">
+                    <ShieldCheck className="w-4 h-4 text-[#DE0D64]" />
+                    <span>ওয়ারেন্টি ও রিটার্ন পলিসি (Warranty & Return Policy)</span>
+                  </div>
+                  <ul className="space-y-1.5 text-[11px] sm:text-xs text-slate-600 leading-relaxed">
+                    <li className="flex items-start gap-1.5">
+                      <span className="text-[#DE0D64] font-bold mt-0.5">•</span>
+                      <span><strong>৭ দিনের রিপ্লেসমেন্ট গ্যারান্টি:</strong> প্রডাক্টে কোনো ম্যানুফ্যাকচারিং ত্রুটি বা সমস্যা থাকলে ৭ দিনের মধ্যে সহজ এক্সচেঞ্জ সুবিধা।</span>
+                    </li>
+                    <li className="flex items-start gap-1.5">
+                      <span className="text-[#DE0D64] font-bold mt-0.5">•</span>
+                      <span><strong>আনবক্সিং ভিডিও:</strong> পার্সেল রিসিভ করার সময় অবশ্যই একটি আনবক্সিং ভিডিও ধারণ করার অনুরোধ করা হচ্ছে।</span>
+                    </li>
+                    <li className="flex items-start gap-1.5">
+                      <span className="text-[#DE0D64] font-bold mt-0.5">•</span>
+                      <span className="text-slate-800 font-semibold bg-pink-100/70 px-1.5 py-0.5 rounded">
+                        আমাদের পক্ষ থেকে ভুল বা ত্রুটিপূর্ণ পণ্য গেলে এক্সচেঞ্জ ফি ও ডেলিভারি চার্জের সম্পূর্ণ দায়িত্ব <strong>Gadgets Ghor</strong> বহন করবে।
+                      </span>
+                    </li>
+                  </ul>
+                </div>
               </div>
 
             </div>
