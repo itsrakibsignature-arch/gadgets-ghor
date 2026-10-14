@@ -60,8 +60,8 @@ export default function CartDrawer() {
                 <ShoppingBag className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-extrabold text-slate-800 text-base">শপিং কার্ট</h3>
-                <span className="text-xs text-slate-500 font-medium">{totalCartCount}টি আইটেম যুক্ত আছে</span>
+                <h3 className="font-extrabold text-slate-800 text-base">Shopping Cart</h3>
+                <span className="text-xs text-slate-500 font-medium">{totalCartCount} item(s) added</span>
               </div>
             </div>
 

@@ -264,7 +264,7 @@ export default function Header() {
                 )}
               </div>
               <div className="hidden sm:flex flex-col items-start text-left leading-none text-xs">
-                <span className="text-[10px] text-pink-200 font-medium">কার্ট</span>
+                <span className="text-[10px] text-pink-200 font-bold uppercase tracking-wider">Cart</span>
                 <span className="font-extrabold text-white text-xs">
                   ৳{cartSubtotal.toLocaleString('bn-BD')}
                 </span>
