@@ -24,12 +24,9 @@ export default function App() {
         <Header />
 
         {/* Main Content Area */}
-        <main className="flex-1 max-w-7xl w-full mx-auto px-2 sm:px-4 md:px-6 py-2 sm:py-4 space-y-4 sm:space-y-8">
-          {/* Hero Banner with Trust Highlights */}
+        <main className="flex-1 max-w-7xl w-full mx-auto px-2 sm:px-4 md:px-6 py-2 sm:py-4 space-y-4 sm:space-y-6">
+          {/* Hero Banner */}
           <HeroBanner />
-
-          {/* Category Slider / Carousel */}
-          <CategorySlider />
 
           {/* Product Grid with Infinite Scroll & Filtering */}
           <ProductGrid />
