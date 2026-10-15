@@ -52,60 +52,6 @@ export default function HeroBanner() {
 
       </div>
 
-      {/* Trust & Guarantee Badges Strip */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
-        {[
-          {
-            icon: Truck,
-            title: 'দ্রুত হোম ডেলিভারি',
-            desc: 'ঢাকা ও দেশজুড়ে দ্রুততম শিপিং',
-            color: 'text-[#DE0D64]',
-            bg: 'bg-pink-50'
-          },
-          {
-            icon: ShieldCheck,
-            title: '১০০% অরিজিনাল গ্যাজেট',
-            desc: 'সরাসরি ইন-স্টক অথেনটিক পণ্য',
-            color: 'text-emerald-600',
-            bg: 'bg-emerald-50'
-          },
-          {
-            icon: RotateCcw,
-            title: 'সহজ রিপ্লেসমেন্ট',
-            desc: 'কোন সমস্যায় দ্রুত পরিবর্তন',
-            color: 'text-blue-600',
-            bg: 'bg-blue-50'
-          },
-          {
-            icon: Banknote,
-            title: 'ক্যাশ অন ডেলিভারি',
-            desc: 'পণ্য হাতে পেয়ে মূল্য পরিশোধ',
-            color: 'text-amber-600',
-            bg: 'bg-amber-50'
-          }
-        ].map((item, i) => {
-          const Icon = item.icon;
-          return (
-            <div 
-              key={i} 
-              className="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-xs flex items-center gap-3 hover:border-pink-200 transition"
-            >
-              <div className={`w-11 h-11 rounded-xl ${item.bg} ${item.color} flex items-center justify-center shrink-0`}>
-                <Icon className="w-5 h-5" />
-              </div>
-              <div className="min-w-0">
-                <h4 className="text-xs md:text-sm font-bold text-slate-800 truncate">
-                  {item.title}
-                </h4>
-                <p className="text-[11px] text-slate-500 truncate">
-                  {item.desc}
-                </p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
     </div>
   );
 }

@@ -98,26 +98,26 @@ export default function ProductDetailsModal() {
         </div>
 
         {/* Modal Scrollable Content */}
-        <div className="overflow-y-auto p-4 sm:p-6 space-y-4 sm:space-y-6">
+        <div className="overflow-y-auto p-3 sm:p-6 space-y-4 sm:space-y-6">
           
-          {/* Main Product Showcase: Ghorer Bazar Style with Multi-Image Gallery */}
+          {/* Main Product Showcase: Ghorer Bazar Style with Multi-Image Gallery & Details */}
           <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start">
             
-            {/* Left Image Section: Ghorer Bazar Gallery (Thumbnail column + Main preview) */}
+            {/* Left Image Section: Exact Ghorer Bazar Gallery (Vertical Thumbnails on left + Main preview on right) */}
             <div className="w-full md:w-1/2 flex flex-col items-center">
               
-              <div className="w-full flex gap-2.5 sm:gap-3">
+              <div className="w-full flex gap-2 sm:gap-3 items-start">
                 
-                {/* Vertical Thumbnails List (Desktop) / Horizontal (Mobile) */}
+                {/* Vertical Thumbnails List (Matching 2nd image on mobile & desktop) */}
                 {productImages.length > 1 && (
-                  <div className="flex md:flex-col gap-2 overflow-x-auto md:overflow-y-auto max-h-[300px] pb-1 md:pb-0 scrollbar-none shrink-0">
+                  <div className="flex flex-col gap-2 max-h-[300px] sm:max-h-[360px] overflow-y-auto pb-1 scrollbar-none shrink-0 w-12 sm:w-16">
                     {productImages.map((imgUrl, idx) => (
                       <button
                         key={idx}
                         onClick={() => setActiveImageIndex(idx)}
-                        className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl p-1 bg-white border-2 transition cursor-pointer flex items-center justify-center shrink-0 ${
+                        className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl p-1 bg-white border-2 transition cursor-pointer flex items-center justify-center shrink-0 ${
                           activeImageIndex === idx 
-                            ? 'border-[#DE0D64] shadow-xs' 
+                            ? 'border-[#DE0D64] shadow-xs ring-1 ring-[#DE0D64]/30' 
                             : 'border-slate-200 hover:border-pink-200 opacity-70 hover:opacity-100'
                         }`}
                       >
@@ -133,7 +133,7 @@ export default function ProductDetailsModal() {
                 )}
 
                 {/* Main Image Stage */}
-                <div className="flex-1 aspect-square bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-6 flex items-center justify-center relative shadow-xs group">
+                <div className="flex-1 aspect-square bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-6 flex items-center justify-center relative shadow-xs group">
                   
                   {/* Top Badges */}
                   <div className="absolute top-3 left-3 z-10 flex flex-col gap-1 items-start">
@@ -160,7 +160,7 @@ export default function ProductDetailsModal() {
                   <img
                     src={currentDisplayImage}
                     alt={selectedProduct.name}
-                    className="w-full h-full object-contain max-h-[300px] transition-transform duration-300 group-hover:scale-105"
+                    className="w-full h-full object-contain max-h-[280px] sm:max-h-[340px] transition-transform duration-300 group-hover:scale-105"
                     onError={(e) => { e.target.src = '/logo-icon.jpg'; }}
                   />
 
@@ -169,14 +169,14 @@ export default function ProductDetailsModal() {
                     <>
                       <button
                         onClick={() => setActiveImageIndex(prev => (prev === 0 ? productImages.length - 1 : prev - 1))}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 p-1 rounded-full bg-white/80 hover:bg-white text-slate-700 shadow-md transition cursor-pointer"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-white/90 hover:bg-white text-slate-700 shadow-md transition cursor-pointer"
                         aria-label="Previous image"
                       >
                         <ChevronLeft className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => setActiveImageIndex(prev => (prev === productImages.length - 1 ? 0 : prev + 1))}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-full bg-white/80 hover:bg-white text-slate-700 shadow-md transition cursor-pointer"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-white/90 hover:bg-white text-slate-700 shadow-md transition cursor-pointer"
                         aria-label="Next image"
                       >
                         <ChevronRight className="w-4 h-4" />
@@ -277,9 +277,49 @@ export default function ProductDetailsModal() {
                   </div>
                 </div>
 
-                {/* Product Key Highlights (Clean concise points) */}
+                {/* 4 Action Buttons Strip: Directly after Quantity (Exact Ghorer Bazar Position) */}
+                <div className="space-y-2 pt-1 mb-5">
+                  {/* Row 1: ADD TO CART (Pink brand color) + BUY NOW (Dark Slate/Navy) */}
+                  <div className="grid grid-cols-2 gap-2.5">
+                    <button
+                      onClick={handleAddToCart}
+                      className="w-full bg-[#DE0D64] hover:bg-[#B8004F] text-white py-3 px-3 rounded-xl font-black text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 transition-transform active:scale-95 cursor-pointer uppercase tracking-wider"
+                    >
+                      <ShoppingCart className="w-4 h-4" />
+                      <span>ADD TO CART</span>
+                    </button>
+
+                    <button
+                      onClick={handleBuyNow}
+                      className="w-full bg-slate-900 hover:bg-black text-white py-3 px-3 rounded-xl font-black text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 transition-transform active:scale-95 cursor-pointer uppercase tracking-wider"
+                    >
+                      <span>BUY NOW</span>
+                    </button>
+                  </div>
+
+                  {/* Row 2: Order On WhatsApp (Green) + Call For Order (Blue) */}
+                  <div className="grid grid-cols-2 gap-2.5">
+                    <button
+                      onClick={handleWhatsAppOrder}
+                      className="w-full bg-[#10B981] hover:bg-[#059669] text-white py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 transition-transform active:scale-95 cursor-pointer"
+                    >
+                      <MessageCircle className="w-4 h-4 fill-white" />
+                      <span>Order On WhatsApp</span>
+                    </button>
+
+                    <a
+                      href="tel:01400725333"
+                      className="w-full bg-[#1E3A8A] hover:bg-[#1E40AF] text-white py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 transition-transform active:scale-95 text-center"
+                    >
+                      <PhoneCall className="w-4 h-4" />
+                      <span>Call For Order</span>
+                    </a>
+                  </div>
+                </div>
+
+                {/* Product Key Highlights (Clean concise points) - Placed after action buttons */}
                 {selectedProduct.highlights && selectedProduct.highlights.length > 0 && (
-                  <div className="mb-4 bg-slate-50/80 rounded-xl p-3 border border-slate-200/60">
+                  <div className="mb-4 bg-slate-50/80 rounded-xl p-3.5 border border-slate-200/60">
                     <h3 className="text-xs font-bold text-slate-800 mb-2 flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#DE0D64]"></span>
                       মূল বৈশিষ্ট্যসমূহ (Key Highlights):
@@ -320,48 +360,6 @@ export default function ProductDetailsModal() {
                 </div>
               </div>
 
-            </div>
-
-          </div>
-
-          {/* 4 Action Buttons Strip (Exact Ghorer Bazar 4-Button Grid in User's Pink Brand Theme) */}
-          <div className="space-y-2 pt-2 border-t border-slate-100">
-            
-            {/* Row 1: ADD TO CART (Pink brand color) + BUY NOW (Dark Slate/Navy) */}
-            <div className="grid grid-cols-2 gap-2.5">
-              <button
-                onClick={handleAddToCart}
-                className="w-full bg-[#DE0D64] hover:bg-[#B8004F] text-white py-3 px-3 rounded-xl font-black text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 transition-transform active:scale-95 cursor-pointer uppercase tracking-wider"
-              >
-                <ShoppingCart className="w-4 h-4" />
-                <span>ADD TO CART</span>
-              </button>
-
-              <button
-                onClick={handleBuyNow}
-                className="w-full bg-slate-900 hover:bg-black text-white py-3 px-3 rounded-xl font-black text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 transition-transform active:scale-95 cursor-pointer uppercase tracking-wider"
-              >
-                <span>BUY NOW</span>
-              </button>
-            </div>
-
-            {/* Row 2: Order On WhatsApp (Green) + Call For Order (Blue) */}
-            <div className="grid grid-cols-2 gap-2.5">
-              <button
-                onClick={handleWhatsAppOrder}
-                className="w-full bg-[#10B981] hover:bg-[#059669] text-white py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 transition-transform active:scale-95 cursor-pointer"
-              >
-                <MessageCircle className="w-4 h-4 fill-white" />
-                <span>Order On WhatsApp</span>
-              </button>
-
-              <a
-                href="tel:01400725333"
-                className="w-full bg-[#1E3A8A] hover:bg-[#1E40AF] text-white py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 transition-transform active:scale-95 text-center"
-              >
-                <PhoneCall className="w-4 h-4" />
-                <span>Call For Order</span>
-              </a>
             </div>
 
           </div>
